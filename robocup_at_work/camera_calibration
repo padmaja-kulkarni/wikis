@@ -1,0 +1,37 @@
+Standard Procedure:
+
++Updating the urdf of the robot
+ +=============================
+ +
+ +When you need to add parts to the robot (such as a camera, plate, fingers etc.) the urdf of the robot needs to be updated.
+ +
+ +The example here is to update the urdf to adjust the position/tilt of the Asus camera. You can follow similar steps for adjusting other parts as well.
+ +
+ +* Run mir_bringup on the robot
+ +
+ +		roslaunch mir_bringup robot.launch
+ +* Open rviz and add the robot model and PointCloud2 from the Asus
+ +* Move the arm if necessary, so that the arm is in view of the camera and it can be seen as a pointcloud
+ +* Open the urdf file for the robot
+ +
+ +		 mas_industrial_robotics/blob/hydro/mir_robots/mir_hardware_config/youbot-brsu-2/urdf/robot.urdf.xacro
+ +* Update the values for the `asus_xtion_camera` tag
+ +* Run the following command to update the urdf in the robot model in rviz
+ +
+ +		roslaunch mir_hardware_config upload_param.launch; rosrun robot_state_publisher robot_state_publisher
+ +* Repeat the previous two steps until the pointcloud of the arm (or other parts of the robot) match the robot model
+ 
+ 
+ Magdeburg Hacks:
+ since the arm is not visible with the camera, point the camera at the workspace and adjust the angle until the 
+ workspace pointcloud is horizontal.
+ Then run the pointcloud2laser.launch file 
+ 
+ 
+ https://github.com/ros-perception/pointcloud_to_laserscan/blob/indigo-devel/launch/sample_node.launch
+ 
+ move the camera urdf around until /scan_front and the laser scan readings from the camera match each other.
+ 
+ one can also collect pointclouds as long as the workspace pointcloud is horizontal, and fix the x, y and yaw later
+ 
+ 
